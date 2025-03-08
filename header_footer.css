@@ -14,7 +14,6 @@ body {
 header, footer {
     background-color: white;
     width: 100%;
-    border-radius: 15px;
     padding: 10px 20px;
 }
 
@@ -23,6 +22,8 @@ header {
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
 }
 
 .logo img {
@@ -79,7 +80,9 @@ footer {
     padding: 20px;
     position: absolute;
     bottom: 0;
-}
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}}
 
 footer p {
     background-color: #94A6A2;
