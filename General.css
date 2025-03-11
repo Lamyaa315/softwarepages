@@ -60,6 +60,16 @@ nav ul {
                 background-color: #95775e;
                 color: white;
             }
+
+.signout {
+    background-color: #95775e;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+}
+
+
 footer {
     text-align: center;
     padding: 20px;
