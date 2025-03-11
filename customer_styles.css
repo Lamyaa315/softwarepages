@@ -22,7 +22,15 @@ th, td {
     color: orange;
     font-weight: bold;
 }
+.status.canceled {
+    color: darkred;
+    font-weight: bold;
+}
 
+.status.completed {
+    color: darkslategrey;
+    font-weight: bold;
+}
 /* Booking Details Sidebar */
 .booking-details {
     background: white;
@@ -56,4 +64,28 @@ button {
     background-color: #28a745;
     color: white;
 }
+/* Dropdown Styling */
+.filters select {
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.3s ease-in-out;
+}
+
+    /* Hover & Focus Effects */
+    .filters select:hover,
+    .filters select:focus {
+        border-color: #172554;
+        box-shadow: 0px 0px 5px rgba(23, 37, 84, 0.5);
+    }
+
+    /* Custom Styling for Active Selection */
+    .filters select option {
+        font-size: 14px;
+        padding: 8px;
+    }
 

@@ -6,7 +6,7 @@
     <title>Manage Appointments</title>
     <link rel="stylesheet" href="General.css">
     <link rel="stylesheet" href="artist_styles.css">
-    <script src="artist_script.js" defer></script>
+    <script src="FilterScript.js" defer></script>
 </head>
 <body>
     <header>
@@ -15,13 +15,36 @@
         </div>
         <nav class="navigation">
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="MAHomePage.html">Home</a></li>
                 <li><a href="#">Beauty Tips</a></li>
+                <li><a href="MAppointment.html">Reservations</a></li>
+                <li><a href="#" class="signout">Signout</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="dashboard">
+        <div class="filters">
+            <label for="sortStatus"><strong>Filter by Status:</strong></label>
+            <select id="sortStatus" onchange="sortAppointmentsByStatus()">
+                <option value="all">All Statuses</option>
+                <option value="active">Active</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+                <option value="canceled">Canceled</option>
+            </select>
+        </div>
+
+
+
+
+        <!---<select id="sortStatus" onchange="sortAppointmentsByStatus()">
+            <option value="status">Sort by Status</option>
+            <option value="all">All Statuses</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+            <option value="canceled">Canceled</option>
+        </select>-->
         <section class="appointments container">
             <table>
                 <thead>
@@ -36,33 +59,35 @@
                 <tbody>
                     <tr class="selected">
                         <td>Sarah</td>
-                        <td>March 10, 2024</td>
+                        <td>October 10, 2025</td>
                         <td>3:00 PM</td>
                         <td>Bridal Makeup</td>
                         <td class="status active">Active</td>
                     </tr>
                     <tr>
                         <td>Lamya</td>
-                        <td>March 15, 2024</td>
+                        <td>March 15, 2025</td>
                         <td>5:30 PM</td>
                         <td>Evening Makeup</td>
                         <td class="status pending">Pending</td>
                     </tr>
+                    <tr class="selected">
+                        <td>Rand</td>
+                        <td>April 1, 2024</td>
+                        <td>1:00 PM</td>
+                        <td>Bridal Makeup</td>
+                        <td class="status canceled">Canceled</td>
+                    </tr>
+                    <tr class="selected">
+                        <td>Raghad</td>
+                        <td>March 1, 2024</td>
+                        <td>2:30 PM</td>
+                        <td>Evening Makeup</td>
+                        <td class="status completed">Completed</td>
+                    </tr>
                 </tbody>
             </table>
         </section>
-        
-        <!--<aside class="booking-details">
-            <h2>Booking Details</h2>
-            <p><strong>Customer:</strong> Sarah</p>
-            <p><strong>Date:</strong> March 10, 2024</p>
-            <p><strong>Time:</strong> 3:00 PM</p>
-            <p><strong>Service:</strong> Bridal Makeup</p>
-            <p><strong>Status:</strong> Active</p>
-            <button class="confirm">Confirm</button>
-            <button class="reschedule">Reschedule</button>
-            <button class="cancel">Cancel Booking</button>
-        </aside>-->
     </main>
 
     <footer>
