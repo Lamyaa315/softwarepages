@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - Makeup Artist</title>
+    <link rel="stylesheet" href="header_footer.css">
+    <script src="artists.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f8fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        .container {
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let storedUser = localStorage.getItem("user");
+        let storedRole = localStorage.getItem("userType");
+
+        if (!storedUser || storedRole !== "artist") {
+            window.location.href = "###################"; 
+        }
+    </script>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="logo2.jpg" alt="رواء Logo">
+        </div>
+        <nav class="navigation">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Beauty Tips</a></li>
+                <li><a href="#">Reservations</a></li>
+                <li><a href="###################" class="signout">Signout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container" id="profileContainer">
+        <h1>Edit Your Profile</h1>
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+        
+        <label for="description">Description:</label>
+        <textarea id="description"></textarea>
+        
+        <h2>My Work</h2>
+        <div class="gallery" id="galleryContainer"></div>
+        <input type="text" id="newWorkImage" placeholder="Add image URL">
+        <button onclick="addWorkImage()">Add Image</button>
+
+        <h2>Services</h2>
+        <textarea id="services"></textarea>
+
+        <h2>Contact</h2>
+        <label for="whatsapp">WhatsApp:</label>
+        <input type="text" id="whatsapp">
+
+        <label for="instagram">Instagram:</label>
+        <input type="text" id="instagram">
+
+        <button class="save-button" onclick="saveProfile()">Save Changes</button>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 رواء. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function loadArtistProfile() {
+            const params = new URLSearchParams(window.location.search);
+            const artistId = parseInt(params.get("id"));
+            const artist = artists.find(a => a.id === artistId);
+            if (!artist) {
+                document.getElementById("profileContainer").innerHTML = "<h2>Artist not found</h2>";
+                return;
+            }
+            
+            document.getElementById("name").value = artist.name;
+            document.getElementById("description").value = artist.description;
+            document.getElementById("services").value = artist.services.join("\n");
+            document.getElementById("whatsapp").value = artist.whatsapp;
+            document.getElementById("instagram").value = artist.instagram;
+            
+            const galleryContainer = document.getElementById("galleryContainer");
+            galleryContainer.innerHTML = artist.workImages.map(img => `<img src="${img}" alt="Work Image">`).join('');
+        }
+        
+        function addWorkImage() {
+            const newImage = document.getElementById("newWorkImage").value;
+            if (newImage) {
+                document.getElementById("galleryContainer").innerHTML += `<img src="${newImage}" alt="New Work Image">`;
+                document.getElementById("newWorkImage").value = "";
+            }
+        }
+        
+        function saveProfile() {
+            alert("Profile saved successfully! (Note: This is a frontend-only demo. Data is not stored permanently.)");
+        }
+        
+        document.addEventListener("DOMContentLoaded", loadArtistProfile);
+    </script>
+</body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Makeup Tips</title>
-    <link rel="stylesheet" href="header_footer.css">
+    <link rel="stylesheet" href="General.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -89,17 +89,7 @@
             padding: 8px;
             border-radius: 5px;
         }
-        footer {
-            width: 100%;
-            background-color: #94A6A2;
-            text-align: center;
-            padding: 15px;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            margin-top: 20px;
-            color: white;
-            position: relative;
-        }
+        
     </style>
 </head>
 <body>
@@ -149,7 +139,7 @@
         let storedRole = localStorage.getItem("userType");
 
         if (!storedUser) {
-            window.location.href = "log.html"; 
+            window.location.href = "############3"; 
         } else {
             document.getElementById("userName").innerText = storedUser;
             if (storedRole === "artist") {
