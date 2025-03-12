@@ -1,58 +1,48 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const makeupRole = document.getElementById("MakeupArtistRole");
-    const clientRole = document.getElementById("ClientRole");
-    const makeupForm = document.getElementById("MakeupArtist");
-    const clientForm = document.getElementById("Client");
-
-    makeupForm.style.display = "none";
-    clientForm.style.display = "none";
-
+    const userForm = document.getElementById("UserForm");
+    const roleInputs = document.querySelectorAll("input[name='role']");
+    
     function showForm() {
-        makeupForm.style.display = "none";
-        clientForm.style.display = "none";
+        const selectedRole = document.querySelector("input[name='role']:checked").value;
+        console.log("Selected Role:", selectedRole); // Debugging line
 
-        if (makeupRole.checked) {
-            makeupForm.style.display = "block";
-        } else if (clientRole.checked) {
-            clientForm.style.display = "block";
+        if (selectedRole === "Client") {
+            userForm.dataset.role = "Client";
+        } else {
+            userForm.dataset.role = "MakeupArtist";
         }
     }
 
-    makeupRole.addEventListener("change", showForm);
-    clientRole.addEventListener("change", showForm);
+    roleInputs.forEach(input => input.addEventListener("change", showForm));
+
+    function validateForm() {
+        let name = document.getElementById("FullName").value.trim();
+        let email = document.getElementById("Email").value.trim();
+        let password = document.getElementById("password").value.trim();
+        let phone = document.getElementById("phoneNum").value.trim();
+        let role = document.querySelector("input[name='role']:checked").value;
+
+        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!name || !email || !password || !phone) {
+            alert("All fields are required!");
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address!");
+            return;
+        }
+
+        let userData = { name, email, password, phone, role };
+        localStorage.setItem("userData", JSON.stringify(userData));
+
+        if (role === "MakeupArtist") {
+            window.location.href = "MAHomePage.html";
+        } else {
+            window.location.href = "ClientHomePage.html";
+        }
+    }
+
+    document.querySelector(".signup").addEventListener("click", validateForm);
 });
-function validateForm(role) {
-    let name, email, password, phone;
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (role === "Client") {
-        name = document.getElementById("FullName").value.trim();
-        email = document.getElementById("ClientEmail").value.trim();
-        password = document.getElementById("password").value.trim();
-        phone = document.getElementById("phoneNum").value.trim();
-    } else if (role === "MakeupArtist") {
-        name = document.getElementById("fullName").value.trim();
-        email = document.getElementById("MAEmail").value.trim();
-        password = document.getElementById("pass").value.trim();
-        phone = document.getElementById("PhoneNum").value.trim();
-    }
-
-    if (!name || !email || !password || !phone) {
-        alert("All fields are required!");
-        return;
-    }
-
-    if (!emailRegex.test(email)) {
-        alert("Please enter a valid email address!");
-        return;
-    }
-
-    let userData = { name, email, password, phone };
-    localStorage.setItem("userData", JSON.stringify(userData));
-
-    if (role === "MakeupArtist") {
-        window.location.href = "MAHomePage.html";
-    } else {
-        window.location.href = "WelcomePage.html";
-    }
-}
