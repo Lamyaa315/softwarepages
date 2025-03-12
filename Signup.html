@@ -1,68 +1,50 @@
 <!DOCTYPE html>
 <html lang="ar">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="Signup.css">
-        <script src="SignUp.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Signup.css">
+    <script src="SignUp.js"></script>
+</head>
+<body>
 
-    </head>
-    <body>
+    <!-- Logo at the top -->
+    <div class="logo-container">
         <img src="logo2-removebg-preview.png" alt="Logo">
-        <div class="tabs">
-            <a href="#" style="color: #5d5d5d; ">Login</a>
-            <a href="#" class="active" style="left: 30%;">Sign up</a>
-          </div>
-          <div class="rolesholder">
+    </div>
+
+    <!-- Form Container -->
+    <form id="UserForm">
+        <div class="form-group">
+            <label for="FullName">Name:</label>
+            <input type="text" id="FullName" placeholder="Your Name..">
+        </div>
+        <div class="form-group">
+            <label for="Email">Email:</label>
+            <input type="email" id="Email" placeholder="Your Email..">
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Your password..">
+        </div>
+        <div class="form-group">
+            <label for="phoneNum">Phone Number:</label>
+            <input type="tel" id="phoneNum" placeholder="Your Phone Number..">
+        </div>
+
+        <!-- Role Selection Inside the Form -->
+        <div class="rolesholder">
             <label class="roles">Your role: </label>
             <label class="roles">
-              <input type="radio" name="role" value="Client" id="ClientRole">Client
+                <input type="radio" name="role" value="Client" checked>Client
             </label>
             <label class="roles">
-              <input type="radio" name="role" value="MakeupArtist" id="MakeupArtistRole">Makeup Artist
+                <input type="radio" name="role" value="MakeupArtist">Makeup Artist
             </label>
-          </div>
-            <!-- Form for Client -->
-          <form id="Client">
-            <div class="form-group">
-                <label for="FullName">Name:</label>
-                <input type="text" id="FullName" placeholder="Your Name..">
-              </div>
-            <div class="form-group">
-              <label for="ClientEmail">Email:</label>
-              <input type="email" id="ClientEmail" placeholder="Your Email..">
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" placeholder="Your password..">
-              </div>
-              <div class="form-group">
-                <label for="phoneNum">Phone Number:</label>
-                <input type="tel" id="phoneNum" placeholder="Your Phone Number..">
-              </div>
-              <button class="signup" type="button" onclick="validateForm('Client')">Sign-up</button>
-          </form>
-            <!-- Form for Makeup Artist -->
-             <form id="MakeupArtist">
-                <div class="form-group">
-                    <label for="fullName">Name:</label>
-                    <input type="text" id="fullName" placeholder="Your Name..">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="MAEmail">Email:</label>
-                  <input type="email" id="MAEmail" placeholder="Your Email..">
-                </div>
-                <div class="form-group">
-                    <label for="pass">Password:</label>
-                    <input type="password" id="pass" placeholder="Your password..">
-                  </div>
-                  <div class="form-group">
-                    <label for="PhoneNum">Phone Number:</label>
-                    <input type="tel" id="PhoneNum" placeholder="Your Phone Number..">
-                  </div>
-                  <button class="signup" type="button" onclick="validateForm('MakeupArtist')">Sign-up</button>
-             </form>
+        </div>
 
-    </body>
+        <button class="signup" type="button" onclick="validateForm()">Sign-up</button>
+    </form>
+
+</body>
 </html>
