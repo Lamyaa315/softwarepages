@@ -1,0 +1,10 @@
+body{
+    background-color: #94A6A2;
+}
+img{
+    height: 20%;
+    width: 20%;
+    position: absolute;
+    top: 25%;
+    left: 38%;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="Login.css">
+
+    </head>
+    <body>
+        <img src="logo2-removebg-preview.png" alt="Logo">
+        <div class="tabs">
+            <a href="#" class="active">Login</a>
+            <a href="signup.html" style="color: #5d5d5d; left: 30%;">Sign up</a>
+          </div>
+          <form onsubmit="">
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="password" id="p" placeholder="Enter your password" required>
+            <br>
+            <div class="rolesholder">
+              <label class="roles">Your Role: </label>
+              <label class="roles">
+                <input type="radio" name="role" value="Client" id="cliRole">Client
+              </label>
+              <label class="roles">
+                <input type="radio" name="role" value="MakeupArtist" id="Makeupart">Makeup artist
+              </label>
+            </div>
+            <input type="submit" value="Log In" id="log-button">
+          </form>
+    </body>
+</html>
