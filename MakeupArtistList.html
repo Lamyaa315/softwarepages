@@ -97,6 +97,11 @@
 
         const filteredArtists = artists.filter(artist => artist.name.toLowerCase().includes(searchValue));
 
+        if (filteredArtists.length === 0) {
+            container.innerHTML = `<p style="text-align: center; font-size: 18px; color: red;">No makeup artist found with this name.</p>`;
+            return;
+        }
+
         filteredArtists.forEach(artist => {
             const artistCard = `
                 <div class="artist">
@@ -118,4 +123,5 @@
   </script>
 </body>
 </html>
+
 
