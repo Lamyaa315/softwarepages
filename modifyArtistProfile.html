@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile - Makeup Artist</title>
-    <link rel="stylesheet" href="header_footer.css">
+    <link rel="stylesheet" href="General.css">
     <script src="artists.js"></script>
     <style>
         body {
@@ -28,21 +28,9 @@
             text-align: center;
             flex-grow: 1;
         }
-        .hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
-    <script>
-        let storedUser = localStorage.getItem("user");
-        let storedRole = localStorage.getItem("userType");
-
-        if (!storedUser || storedRole !== "artist") {
-            window.location.href = "###################"; 
-        }
-    </script>
-
     <!-- Header -->
     <header>
         <div class="logo">
@@ -50,10 +38,10 @@
         </div>
         <nav class="navigation">
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Beauty Tips</a></li>
-                <li><a href="#">Reservations</a></li>
-                <li><a href="###################" class="signout">Signout</a></li>
+                <li><a href="MAHomePage.html">Home</a></li>
+                <li><a href="tips.html">Beauty Tips</a></li>
+                <li><a href="MAppointment.html">Reservations</a></li>
+                <li><a href="WelcomePage.html" class="signout">Signout</a></li>
             </ul>
         </nav>
     </header>

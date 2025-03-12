@@ -35,36 +35,67 @@
             border-radius: 10px;
             border: 2px solid #BFA380;
         }
-        
+        .booking-button {
+            background-color: #BFA380;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .booking-form {
+            display: none;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
         <div class="logo">
-            <img src="logo2.jpg" alt="رواء Logo">
+            <img src="logo2.jpg" alt="Roa Logo">
         </div>
         <nav class="navigation">
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Beauty Tips</a></li>
-                <li><a href="#">Reservations</a></li>
-                <li><a href="log.html" class="signout">Signout</a></li>
+                <li><a href="ClientHomePage.html">Home</a></li>
+                <li><a href="tips.html">Beauty Tips</a></li>
+                <li><a href="CAppointment.html">Reservations</a></li>
+                <li><a href="WelcomePage.html" class="signout">Signout</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Main Content -->
     <div class="container" id="profileContainer">
-        <!-- سيتم تحميل بيانات الفنانة هنا -->
+        <!-- Artist data will be loaded here -->
     </div>
     
+    <!-- Booking Form -->
+    <div class="container booking-form" id="bookingForm">
+        <h2>Book an Appointment</h2>
+        <label for="bookingDate">Select Date:</label>
+        <input type="date" id="bookingDate">
+        <br>
+        <label for="bookingTime">Select Time:</label>
+        <input type="time" id="bookingTime">
+        <br>
+        <button id="confirmBooking" class="booking-button">Confirm Booking</button>
+    </div>
+
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 رواء. All Rights Reserved.</p>
+        <p>&copy; 2025 Roa. All Rights Reserved.</p>
     </footer>
 
     <script>
+        let bookedAppointments = [];
+
+        function isTimeSlotAvailable(date, time) {
+            return !bookedAppointments.some(appt => appt.date === date && appt.time === time);
+        }
+
         function loadArtistProfile() {
             const params = new URLSearchParams(window.location.search);
             const artistId = parseInt(params.get("id"));
@@ -89,12 +120,37 @@
                     ${artist.services.map(service => `<li>${service}</li>`).join('')}
                 </ul>
 
+                <button id="bookingButton" class="booking-button">Book Now</button>
+
                 <h2>Contact Me</h2>
                 <div class="contact">
                     <a href="${artist.whatsapp}">WhatsApp</a>
                     <a href="${artist.instagram}">Instagram</a>
                 </div>
             `;
+
+            document.getElementById("bookingButton").addEventListener("click", function() {
+                document.getElementById("bookingForm").style.display = "block";
+            });
+
+            document.getElementById("confirmBooking").addEventListener("click", function() {
+                const date = document.getElementById("bookingDate").value;
+                const time = document.getElementById("bookingTime").value;
+                
+                if (!date || !time) {
+                    alert("Please select a date and time.");
+                    return;
+                }
+                
+                if (!isTimeSlotAvailable(date, time)) {
+                    alert("This time slot is already booked. Please choose another time.");
+                    return;
+                }
+                
+                bookedAppointments.push({ date, time });
+                alert(`Your booking is confirmed for ${date} at ${time}!`);
+                document.getElementById("bookingForm").style.display = "none";
+            });
         }
 
         document.addEventListener("DOMContentLoaded", loadArtistProfile);
