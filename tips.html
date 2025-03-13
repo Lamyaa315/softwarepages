@@ -17,15 +17,13 @@
             min-height: 100vh;
         }
         .container {
-            width: 500px;
+            width: 600px;
             background: white;
             border-radius: 10px;
-            padding: 10px;
+            padding: 15px;
             margin-top: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            position: relative;
-            flex-grow: 1;
             overflow-y: auto;
         }
         .tip {
@@ -34,62 +32,11 @@
             text-align: left;
             color: #5A706D;
         }
-        .hidden {
-            display: none;
-        }
-        #feed {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-        .add-tip-button {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #5A706D;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 50px;
-            cursor: pointer;
-            width: 150px;
-            text-align: center;
-        }
-        .form-container {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            min-width: 300px;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            display: none;
-        }
-        input {
-            width: calc(100% - 20px);
-            margin: 5px 0;
-            padding: 8px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-        .form-container button {
-            background-color: #5A706D;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
+        .tip img, .tip video {
             width: 100%;
-            padding: 8px;
-            border-radius: 5px;
+            border-radius: 10px;
+            margin-top: 10px;
         }
-        
     </style>
 </head>
 <body>
@@ -100,9 +47,10 @@
         </div>
         <nav class="navigation">
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="ClientHomePage.html">Home</a></li>
                 <li><a href="tips.html">Beauty Tips</a></li>
-                <li><a href="#">Reservations</a></li>
+                <li><a href="CAppointment.html">Reservations</a></li>
+                <li><a href="MakeupArtistList.html">Makeup Artists</a></li>
                 <li><a href="WelcomePage.html" class="signout">Signout</a></li>
             </ul>
         </nav>
@@ -110,84 +58,43 @@
 
     <!-- Main Content -->
     <div class="container">
-        <h2>Welcome, <span id="userName"></span></h2>
-        
-        
-        <div id="customerView">
-            <h3>Makeup Tips</h3>
-            <div id="feed"></div>
-        </div>
-        
-        <div id="artistView" class="hidden">
-            <button class="add-tip-button" onclick="toggleForm()">➕ Add Tip</button>
-            <div class="form-container" id="formContainer">
-                <h3>Add Your Tip</h3>
-                <input type="text" id="text" placeholder="Write a makeup tip..."><br>
-                <input type="text" id="image" placeholder="Image URL (optional)"><br>
-                <button onclick="addTip()">Submit</button>
+        <h2>Makeup Tips</h2>
+        <div id="feed">
+            <div class="tip">
+                <h3>Hydration is Key</h3>
+                <p>Always keep your skin hydrated before applying makeup for a smooth finish.</p>
+            
+            </div>
+
+            <div class="tip">
+                <h3>Use a Primer</h3>
+                <p>Apply a primer to make your makeup last longer and look flawless.</p>
+                <img src="images/Primers.jpeg" alt="Primer Application">
+            
+            </div>
+
+            <div class="tip">
+                <h3>Blend, Blend, Blend</h3>
+                <p>Make sure to blend your foundation and eyeshadow properly for a natural look.</p>
+               
+                <video controls>
+                    <source src="images/blend.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="tip">
+                <h3>Choose the Right Shade</h3>
+                <p>Ensure your foundation and concealer match your skin tone perfectly.</p>
+                <img src="images/shades.jpg" alt="Choosing the Right Shade">
+              
             </div>
         </div>
     </div>
-    
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 رواء. All Rights Reserved.</p>
     </footer>
-    
-    <script>
-        let storedUser = localStorage.getItem("user");
-        let storedRole = localStorage.getItem("userType");
-
-        if (!storedUser) {
-            window.location.href = "############3"; 
-        } else {
-            document.getElementById("userName").innerText = storedUser;
-            if (storedRole === "artist") {
-                document.getElementById("artistView").classList.remove("hidden");
-            }
-        }
-
-        function toggleForm() {
-            let form = document.getElementById("formContainer");
-            form.style.display = (form.style.display === "block") ? "none" : "block";
-        }
-
-        function loadTips() {
-            const feed = document.getElementById("feed");
-            feed.innerHTML = ""; 
-
-            let tips = JSON.parse(localStorage.getItem("tips")) || [];
-
-            tips.forEach(tip => {
-                const tipElement = document.createElement("div");
-                tipElement.classList.add("tip");
-                tipElement.innerHTML = `
-                    <h3>${tip.name}</h3>
-                    <p>${tip.text}</p>
-                    ${tip.image ? `<img src="${tip.image}" alt="Makeup Tip">` : ''}
-                `;
-                feed.appendChild(tipElement);
-            });
-        }
-
-        function addTip() {
-            const text = document.getElementById("text").value;
-            const image = document.getElementById("image").value;
-            if (text.trim() === "") {
-                alert("Please enter a tip!");
-                return;
-            }
-            let tips = JSON.parse(localStorage.getItem("tips")) || [];
-            let newTip = { name: storedUser, text, image };
-            tips.unshift(newTip); 
-            localStorage.setItem("tips", JSON.stringify(tips));
-            loadTips();
-            document.getElementById("text").value = "";
-            document.getElementById("image").value = "";
-            document.getElementById("formContainer").style.display = "none";
-        }
-
-        loadTips();
-    </script>
 </body>
 </html>

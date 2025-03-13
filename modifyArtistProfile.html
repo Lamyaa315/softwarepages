@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile - Makeup Artist</title>
     <link rel="stylesheet" href="General.css">
-    <script src="artists.js"></script>
+    <script defer src="artists.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,6 +28,15 @@
             text-align: center;
             flex-grow: 1;
         }
+        .gallery img {
+            max-width: 100px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        .checkbox-group {
+            text-align: left;
+            margin: 10px auto;
+        }
     </style>
 </head>
 <body>
@@ -39,8 +48,8 @@
         <nav class="navigation">
             <ul>
                 <li><a href="MAHomePage.html">Home</a></li>
-                <li><a href="tips.html">Beauty Tips</a></li>
                 <li><a href="MAppointment.html">Reservations</a></li>
+                <li><a href="modifyArtistProfile.html">Edit Profile</a></li>
                 <li><a href="WelcomePage.html" class="signout">Signout</a></li>
             </ul>
         </nav>
@@ -49,19 +58,24 @@
     <!-- Main Content -->
     <div class="container" id="profileContainer">
         <h1>Edit Your Profile</h1>
+
         <label for="name">Name:</label>
         <input type="text" id="name">
-        
+
         <label for="description">Description:</label>
         <textarea id="description"></textarea>
-        
+
         <h2>My Work</h2>
         <div class="gallery" id="galleryContainer"></div>
         <input type="text" id="newWorkImage" placeholder="Add image URL">
         <button onclick="addWorkImage()">Add Image</button>
 
         <h2>Services</h2>
-        <textarea id="services"></textarea>
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="eveningMakeup" value="Evening Makeup"> Evening Makeup</label><br>
+            <label><input type="checkbox" id="bridalMakeup" value="Bridal Makeup"> Bridal Makeup</label><br>
+            <label><input type="checkbox" id="naturalLook" value="Natural Look"> Natural Look</label>
+        </div>
 
         <h2>Contact</h2>
         <label for="whatsapp">WhatsApp:</label>
@@ -72,7 +86,7 @@
 
         <button class="save-button" onclick="saveProfile()">Save Changes</button>
     </div>
-    
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 رواء. All Rights Reserved.</p>
@@ -80,37 +94,77 @@
 
     <script>
         function loadArtistProfile() {
-            const params = new URLSearchParams(window.location.search);
-            const artistId = parseInt(params.get("id"));
-            const artist = artists.find(a => a.id === artistId);
-            if (!artist) {
-                document.getElementById("profileContainer").innerHTML = "<h2>Artist not found</h2>";
-                return;
+            const savedProfile = localStorage.getItem("artistProfile");
+
+            if (savedProfile) {
+                const artist = JSON.parse(savedProfile);
+                
+                document.getElementById("name").value = artist.name || "";
+                document.getElementById("description").value = artist.description || "";
+                document.getElementById("whatsapp").value = artist.whatsapp || "";
+                document.getElementById("instagram").value = artist.instagram || "";
+
+                // استرجاع الخدمات المختارة
+                const services = artist.services || [];
+                document.getElementById("eveningMakeup").checked = services.includes("Evening Makeup");
+                document.getElementById("bridalMakeup").checked = services.includes("Bridal Makeup");
+                document.getElementById("naturalLook").checked = services.includes("Natural Look");
+
+                // استرجاع الصور المحفوظة
+                const galleryContainer = document.getElementById("galleryContainer");
+                galleryContainer.innerHTML = "";
+                (artist.workImages || []).forEach(img => {
+                    const imageElement = document.createElement("img");
+                    imageElement.src = img;
+                    imageElement.alt = "Work Image";
+                    galleryContainer.appendChild(imageElement);
+                });
             }
-            
-            document.getElementById("name").value = artist.name;
-            document.getElementById("description").value = artist.description;
-            document.getElementById("services").value = artist.services.join("\n");
-            document.getElementById("whatsapp").value = artist.whatsapp;
-            document.getElementById("instagram").value = artist.instagram;
-            
-            const galleryContainer = document.getElementById("galleryContainer");
-            galleryContainer.innerHTML = artist.workImages.map(img => `<img src="${img}" alt="Work Image">`).join('');
         }
-        
+
+        function saveProfile() {
+            // تجميع الخدمات المختارة
+            const selectedServices = [];
+            if (document.getElementById("eveningMakeup").checked) selectedServices.push("Evening Makeup");
+            if (document.getElementById("bridalMakeup").checked) selectedServices.push("Bridal Makeup");
+            if (document.getElementById("naturalLook").checked) selectedServices.push("Natural Look");
+
+            const artistProfile = {
+                name: document.getElementById("name").value,
+                description: document.getElementById("description").value,
+                services: selectedServices, // حفظ الخدمات كـ Array
+                whatsapp: document.getElementById("whatsapp").value,
+                instagram: document.getElementById("instagram").value,
+                workImages: Array.from(document.querySelectorAll("#galleryContainer img")).map(img => img.src)
+            };
+
+            // حفظ البيانات في Local Storage
+            localStorage.setItem("artistProfile", JSON.stringify(artistProfile));
+
+            alert("Profile saved successfully!");
+        }
+
         function addWorkImage() {
             const newImage = document.getElementById("newWorkImage").value;
             if (newImage) {
-                document.getElementById("galleryContainer").innerHTML += `<img src="${newImage}" alt="New Work Image">`;
+                const galleryContainer = document.getElementById("galleryContainer");
+                const imageElement = document.createElement("img");
+                imageElement.src = newImage;
+                imageElement.alt = "New Work Image";
+                galleryContainer.appendChild(imageElement);
+
+                // حفظ الصور في Local Storage
+                const savedProfile = JSON.parse(localStorage.getItem("artistProfile")) || {};
+                savedProfile.workImages = savedProfile.workImages || [];
+                savedProfile.workImages.push(newImage);
+                localStorage.setItem("artistProfile", JSON.stringify(savedProfile));
+
                 document.getElementById("newWorkImage").value = "";
             }
         }
-        
-        function saveProfile() {
-            alert("Profile saved successfully! (Note: This is a frontend-only demo. Data is not stored permanently.)");
-        }
-        
+
         document.addEventListener("DOMContentLoaded", loadArtistProfile);
     </script>
+
 </body>
 </html>
