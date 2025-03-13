@@ -81,7 +81,16 @@
         <label for="bookingTime">Select Time:</label>
         <input type="time" id="bookingTime">
         <br>
+        <label class="services">Choose Service: </label><br>
+            <label class="services">
+                <input type="radio" name="service" value="Evening" > Evening Makeup
+            </label><br>
+            <label class="services">
+                <input type="radio" name="service" value="Bridal"> Bridal Makeup 
+            </label>
+            <br>
         <button id="confirmBooking" class="booking-button">Confirm Booking</button>
+        
     </div>
 
     <!-- Footer -->
@@ -136,22 +145,26 @@
             document.getElementById("confirmBooking").addEventListener("click", function() {
                 const date = document.getElementById("bookingDate").value;
                 const time = document.getElementById("bookingTime").value;
+                const service = document.querySelector('input[name="service"]:checked'); 
                 
                 if (!date || !time) {
                     alert("Please select a date and time.");
                     return;
                 }
-                
+                if (!service) { 
+                     alert("Please choose a service.");
+                    return;
+                }
                 if (!isTimeSlotAvailable(date, time)) {
                     alert("This time slot is already booked. Please choose another time.");
                     return;
                 }
                 
-                bookedAppointments.push({ date, time });
-                alert(`Your booking is confirmed for ${date} at ${time}!`);
-                document.getElementById("bookingForm").style.display = "none";
-            });
-        }
+                bookedAppointments.push({ date, time, service: service.value }); 
+                 alert(`Your booking is confirmed for ${date} at ${time} for ${service.value} makeup!`);
+                 document.getElementById("bookingForm").style.display = "none";
+        });
+    }
 
         document.addEventListener("DOMContentLoaded", loadArtistProfile);
     </script>
